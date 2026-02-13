@@ -1,68 +1,70 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Egg Dealer
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel-based inventory and sales system for egg supply businesses. Manage stock in/out, pricing, cracked eggs, feed inventory, expenses, and reports from a single admin dashboard.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Landing page** – Public site with egg sizes and pricing (configurable from admin)
+- **Authentication** – Login for admin and inventory manager roles; redirect to `/admin` when already logged in
+- **Dashboard** – Stats, today’s snapshot, monthly revenue (net of expenses), expenses (purchases + feed value), Revenue vs Expenses chart with period filter (Today, Yesterday, This month, Last month, Last 12 months), Sales overview, inventory and feed tables
+- **Egg sizes & pricing** – CRUD for size categories and price entries (per piece, tray, bulk) with effective dates
+- **Stock in** – Record purchases/deliveries by date, size, quantity (pieces/trays), cost; date search; 12-hour time in table
+- **Stock out** – Record sales by order type (piece/tray/bulk), size, quantity, price; date search; 12-hour time in table
+- **Cracked eggs** – Log damaged eggs by size and reason; date search; 12-hour time in table
+- **Inventory** – View current stock by size; update minimum stock alerts; auto-updated on stock in/out and cracked
+- **Feeds** – Separate feed inventory: CRUD, quantity, unit, cost per unit, min alert, stock value; adjust stock; included in expenses
+- **Reports** – Date-range reports: summary, stock in/sales/cracked detail, inventory snapshot, feed snapshot, by size; Print and CSV/PDF export
+- **Expenses** – Dashboard shows purchases (stock in) this month, feed inventory value, total; Revenue vs Expenses chart includes both
+- **Users** – CRUD for users (admin, inventory_manager)
+- **Settings** – Business name, address, contact, currency, default tray size, logo, report options
+- **Activity log** – Audit trail with filters (action, user, date range); 12-hour time; per-page option
+- **Dark mode** – Toggle with persistent preference
+- **Responsive** – Tailwind CSS; works on mobile and desktop (including Apple devices)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Laravel** (PHP)
+- **Tailwind CSS** for styling
+- **Alpine.js** for UI (e.g. sidebar, dark mode)
+- **Chart.js** for dashboard charts
+- **Axios** for API calls
+- **SweetAlert2** for notifications
+- **MySQL** (or configured DB)
 
-## Learning Laravel
+## Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Clone the repo and install dependencies:
+   ```bash
+   composer install
+   npm install && npm run build
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Copy `.env.example` to `.env`, set `APP_KEY`, database, and mail if needed:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Run migrations:
+   ```bash
+   php artisan migrate
+   ```
 
-## Laravel Sponsors
+4. (Optional) Seed or create an admin user and set role to `admin` or `inventory_manager`.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. Serve the app (e.g. `php artisan serve` or Laragon) and visit:
+   - `/` – Landing page
+   - `/login` – Admin login (redirects to `/admin` if already logged in)
+   - `/admin` – Dashboard and all admin sections
 
-### Premium Partners
+## Project structure (admin)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **Controllers:** `app/Http/Controllers/Admin/` – Dashboard, StockIn, StockOut, CrackedEgg, Feed, Inventory, Reports, Settings, Users, EggSize, EggPrice, AuditLog, Notifications
+- **Form Requests:** `app/Http/Requests/Admin/` – Validation for store/update (StockIn, StockOut, Feed, EggSize, EggPrice, User, Settings, Inventory, CrackedEgg)
+- **Models:** EggSize, EggPrice, StockIn, StockOut, CrackedEgg, Inventory, Feed, Setting, User, AuditLog
+- **Views:** `resources/views/admin/` – Layout, dashboard, list/modals for each section; `resources/views/auth/login.blade.php`
+- **Docs:** `docs/SUGGESTIONS_ADMIN_FUNCTIONS.md` – Ideas for future improvements
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-# eggdealer
+MIT (or as specified in the repository).
